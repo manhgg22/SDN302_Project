@@ -1,24 +1,43 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import Login from "./pages/login";
+import AdminDashboard from "./admin/AdminDashboard";
+import UserDashboard from "./user/UserDashboard";
+import RequireAuth from "./components/RequireAuth";
+import LandingPage from "./pages/LandingPage";
+import CreateQuestion from "./admin/CreateQuestion";
+import TakeExam from "./user/TakeExam";
+import EnterExamCode from "./user/EnterExamCode";
+import UserResults from "./user/UserResults";
+import UserProfile from "./user/UserProfile";
+import PracticeQuiz from "./user/PracticeQuiz";
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<LandingPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/admin/questions" element={<CreateQuestion />} />
+        <Route path="/user/quiz" element={<EnterExamCode />} />
+        <Route path="/user/quiz/:examId" element={<TakeExam />} />
+        <Route path="/user/results" element={<UserResults />} />
+        <Route path="/user/profile" element={<UserProfile />} />
+        <Route path="/user/questions" element={<PracticeQuiz />} />
+
+
+        {/* Admin chỉ dành cho role = admin */}
+        <Route element={<RequireAuth allowedRoles={["admin"]} />}>
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Route>
+
+        {/* User chỉ dành cho role = user */}
+        <Route element={<RequireAuth allowedRoles={["user"]} />}>
+          <Route path="/user" element={<UserDashboard />} />
+        </Route>
+      </Routes>
+    </Router>
   );
 }
 
