@@ -11,6 +11,7 @@ import EnterExamCode from "./user/EnterExamCode";
 import UserResults from "./user/UserResults";
 import UserProfile from "./user/UserProfile";
 import PracticeQuiz from "./user/PracticeQuiz";
+import AdminResults from "./admin/adminResult";
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route path="/user/results" element={<UserResults />} />
         <Route path="/user/profile" element={<UserProfile />} />
         <Route path="/user/questions" element={<PracticeQuiz />} />
+        <Route path="/admin/results" element={< AdminResults/>} />
 
 
         {/* Admin chỉ dành cho role = admin */}

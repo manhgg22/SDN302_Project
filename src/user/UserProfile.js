@@ -4,16 +4,21 @@ import axios from "axios";
 const UserProfile = () => {
   const [user, setUser] = useState(null);
 
-  // Giả định user đã đăng nhập, lưu _id vào localStorage
-  const userId = "68498dcf374d5cbb25a06e86"; // ← bạn thay bằng dynamic nếu có auth
-
   useEffect(() => {
+    // Lấy userId từ localStorage
+    const userId = localStorage.getItem("userId");
+
+    if (!userId) {
+      console.warn("⚠️ Không tìm thấy userId trong localStorage");
+      return;
+    }
+
     const fetchUser = async () => {
       try {
         const res = await axios.get(`http://localhost:9999/user/${userId}`);
         setUser(res.data);
       } catch (err) {
-        console.error("Không lấy được thông tin người dùng");
+        console.error("❌ Không lấy được thông tin người dùng", err.message);
       }
     };
 
